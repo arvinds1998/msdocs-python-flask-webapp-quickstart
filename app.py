@@ -1,32 +1,13 @@
-import os
+from flask import Flask
 
-from flask import (Flask, redirect, render_template, request,
-                   send_from_directory, url_for)
-
+# Create a Flask app
 app = Flask(__name__)
 
-
-@app.route('/')
-def index():
-   print('Request for index page received')
-   return render_template('index.html')
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
-@app.route('/hello', methods=['POST'])
+# Define a route for the root URL ('/') that responds to GET requests
+@app.route('/', methods=['GET'])
 def hello():
-   name = request.form.get('name')
-
-   if name:
-       print('Request for hello page received with name=%s' % name)
-       return render_template('hello.html', name = name)
-   else:
-       print('Request for hello page received with no name or blank name -- redirecting')
-       return redirect(url_for('index'))
-
+    return 'Hello, World!'
 
 if __name__ == '__main__':
-   app.run()
+    # Run the Flask app
+    app.run(debug=True)
